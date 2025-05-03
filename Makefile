@@ -1,10 +1,21 @@
-.PHONY := build
+JAVAC=javac
+JAVA=java
+CP=.:sqlite-jdbc-3.39.3.0.jar
+SRC=src
+BIN=bin
 
+# Create bin directory if it doesn't exist
+$(BIN):
+	mkdir -p $(BIN)
 
-CS3380A3Q3.class: CS3380A3Q3.java 
-	javac CS3380A3Q3.java
+# Compile Java files
+build: $(BIN)
+	$(JAVAC) -cp $(CP) -d $(BIN) $(SRC)/MyApp.java $(SRC)/MyApp.java
 
-build: CS3380A3Q3.class 
-
+# Run the application
 run: build
-	java -cp .:sqlite-jdbc-3.39.3.0.jar CS3380A3Q3
+	$(JAVA) -cp $(BIN):$(CP) MyApp
+
+# Clean compiled files
+clean:
+	rm -rf $(BIN)/*.class
